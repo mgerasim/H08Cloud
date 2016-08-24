@@ -186,24 +186,38 @@ namespace H08.Models
         public string base64String;
         public H08()
         {
-            ExtremeMirror.PinvokeWindowsNetworking.connectToRemote(@"\\10.8.3.193\dvugms\", "admin", "123comparex");
-            string dirLast = Directory.GetDirectories(@"\\10.8.3.193\dvugms\SINOPTIC\", "H08_*", SearchOption.AllDirectories).OrderByDescending(x => x.ToLower()).First();
-            string pathLast = Directory.GetFiles(dirLast, "*.png").OrderByDescending(x => x.ToLower()).First();
-
-            using (Image image = Image.FromFile(pathLast))
+            try
             {
-                using (MemoryStream m = new MemoryStream())
+                Ftp.Client theFTP = new Ftp.Client("ftp://10.8.3.193", "admin", "123comparex");
+                theFTP.ChangeWorkingDirectory("DVUGMS");
+                theFTP.ChangeWorkingDirectory("SINOPTIC");
+               
+                string dirLast = theFTP.ListDirectory().Where(x => x.Substring(0,3).Contains("H08")).OrderByDescending(x => x.ToLower()).First();
+                theFTP.ChangeWorkingDirectory(dirLast);
+                string pathLast = theFTP.ListDirectory().Where(x => x.Substring(0, 3).Contains("cld")).OrderByDescending(x => x.ToLower()).First();
+
+                string fileTemp = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".tmp";
+                theFTP.DownloadFile(pathLast, fileTemp);
+
+
+                using (Image image = Image.FromFile(fileTemp))
                 {
-                    image.Save(m, image.RawFormat);
-                    byte[] imageBytes = m.ToArray();
+                    using (MemoryStream m = new MemoryStream())
+                    {
+                        image.Save(m, image.RawFormat);
+                        byte[] imageBytes = m.ToArray();
 
-                    // Convert byte[] to Base64 String
-                    string base64String = Convert.ToBase64String(imageBytes);
-                    this.base64String = base64String;
+                        // Convert byte[] to Base64 String
+                        string base64String = Convert.ToBase64String(imageBytes);
+                        this.base64String = base64String;
+                    }
                 }
+                System.IO.File.Delete(fileTemp);
             }
-
-            ExtremeMirror.PinvokeWindowsNetworking.disconnectRemote(@"\\10.8.3.193\dvugms\");
+            catch (Exception ex)
+            {
+                this.base64String = ex.Message;
+            }
         }
     }
 }

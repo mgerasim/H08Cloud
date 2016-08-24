@@ -13,9 +13,17 @@ namespace H08.Controllers
 
         public ActionResult Index()
         {
-            H08.Models.H08 theH08 = new H08.Models.H08();
+            try
+            {
 
-            ViewBag.Base64 = theH08.base64String;
+                H08.Models.H08 theH08 = new H08.Models.H08();
+
+                ViewBag.Base64 = theH08.base64String;
+            }
+            catch (Exception er)
+            {
+                ViewBag.Error = er.Message;
+            }
 
             return View();
         }
