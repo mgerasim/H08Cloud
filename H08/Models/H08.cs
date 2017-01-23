@@ -27,9 +27,9 @@ namespace H08.Models
                 Ftp.Client theFTP = new Ftp.Client("ftp://10.8.3.193", "admin", "123comparex");
                 theFTP.ChangeWorkingDirectory("DVUGMS");
                 theFTP.ChangeWorkingDirectory("SINOPTIC");
+                theFTP.ChangeWorkingDirectory("H08");
+                theFTP.ChangeWorkingDirectory("types");
                
-                string dirLast = theFTP.ListDirectory().Where(x => x.Substring(0,3).Contains("H08")).OrderByDescending(x => x.ToLower()).First();
-                theFTP.ChangeWorkingDirectory(dirLast);
                 string pathLast = theFTP.ListDirectory().Where(x => x.Substring(0, 3).Contains("cld")).OrderByDescending(x => x.ToLower()).First();
 
                 string fileTemp = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".tmp";
