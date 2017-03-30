@@ -2,6 +2,77 @@
     ViewBag.Title = "Himaware 08";
 }
 
-<div class="picture">
+@*<div class="picture">
     <img src="data:image/png;base64,@ViewBag.Base64" />
+</div>*@
+
+<div class="picture">
+    <div><img src="data:image/png;base64,@ViewBag.Types" /></div>
+    <div><img src="data:image/png;base64,@ViewBag.Temperature" /></div>
+    <div><img src="data:image/png;base64,@ViewBag.Height" /></div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){        
+        $('.picture').slick({
+            dots: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            adaptiveHeight: true,
+            autoplay: true,
+            autoplaySpeed: 20000
+        });
+    });
+</script>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div id="types_player">
+
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        var param = { Catalog: 'types' };
+        $.ajax({
+            url: '@Url.Action("Load", "Home")',
+            data: param,
+            success: function (data) {
+                $('#types_player').html(data);
+                $(function () {
+                    var options = {
+                        stageWidth: 400,
+                        stageHeight: 300,
+                        autoStart: false,
+                        pauseOnHover: true,
+                        delay: 1,
+                        loop: true,
+                        play:true
+                    };
+                    $('#types_image_player').imagePlayer(options);
+                });
+            },
+            error: function (x, e) {
+                $('#result').text('Error' + x.responseText);
+            }
+        });
+        return true;
+    })
+</script>
+

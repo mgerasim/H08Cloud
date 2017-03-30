@@ -23,7 +23,15 @@ namespace H08
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/slick").Include(
+                        "~/Scripts/Slick/slick.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/imageplayer").Include(
+                        "~/Scripts/jquery.imageplayer.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/slick").Include("~/Content/Slick/slick.css", "~/Content/Slick/slick-theme.css"));
+            bundles.Add(new StyleBundle("~/Content/imageplayer").Include("~/Content/jquery.imageplayer.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

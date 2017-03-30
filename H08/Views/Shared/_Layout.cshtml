@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="refresh" content="300">
+    <meta http-equiv="refresh" content="600">
     <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/slick")
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/imageplayer")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    @Scripts.Render("~/bundles/slick")
+    @Scripts.Render("~/bundles/imageplayer")
 </head>
 <body>
     @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -20,7 +20,7 @@ namespace H08.Models
     public class H08
     {
         public string base64String;
-        public H08()
+        public H08(string Product)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace H08.Models
                 theFTP.ChangeWorkingDirectory("DVUGMS");
                 theFTP.ChangeWorkingDirectory("SINOPTIC");
                 theFTP.ChangeWorkingDirectory("H08");
-                theFTP.ChangeWorkingDirectory("types");
+                theFTP.ChangeWorkingDirectory(Product);
                
                 string pathLast = theFTP.ListDirectory().Where(x => x.Substring(0, 3).Contains("cld")).OrderByDescending(x => x.ToLower()).First();
 

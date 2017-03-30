@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "";   
+}
+@model List<String>
+
+<ul id="@(ViewBag.Catalog)_image_player">
+    @foreach(var item in Model)
+    {
+        <li><img src="data:image/png;base64,@item" /></li>    
+    }
+    
+
+</ul>
